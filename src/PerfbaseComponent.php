@@ -14,7 +14,7 @@ class PerfbaseComponent extends \CApplicationComponent
     public bool $debug = false;
     public bool $log_errors = true;
     public string $api_key = '';
-    public string $api_url = 'https://receiver.perfbase.com';
+    public string $api_url = 'https://ingress.perfbase.cloud';
     /** @var float|int|string */
     public $sample_rate = 0.1;
     public int $timeout = 10;

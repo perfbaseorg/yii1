@@ -44,7 +44,7 @@ class PerfbaseClientProvider
         try {
             $sdkConfig = Config::fromArray([
                 'api_key' => (string) ($this->config['api_key'] ?? ''),
-                'api_url' => (string) ($this->config['api_url'] ?? 'https://receiver.perfbase.com'),
+                'api_url' => (string) ($this->config['api_url'] ?? 'https://ingress.perfbase.cloud'),
                 'flags' => (int) ($this->config['flags'] ?? 0),
                 'timeout' => (int) ($this->config['timeout'] ?? 10),
                 'proxy' => $this->normalizeProxy($this->config['proxy'] ?? null),
