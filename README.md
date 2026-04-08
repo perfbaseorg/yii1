@@ -1,8 +1,23 @@
-# Perfbase for Yii 1.1
+<p align="center">
+  <a href="https://perfbase.com">
+    <img src="https://cdn.perfbase.com/img/logo-full.svg" alt="Perfbase" width="300">
+  </a>
+</p>
 
-`perfbase/yii1` is the legacy Yii 1.1 adapter for Perfbase.
+<h3 align="center">Perfbase for Yii 1.1</h3>
+<p align="center">
+  Yii 1.1 integration for <a href="https://perfbase.com">Perfbase</a>.
+</p>
 
-It follows the Perfbase framework adapter guide: keep the framework layer thin, delegate transport and extension access to `perfbase/php-sdk`, fail open in production, and keep action naming low-cardinality.
+<p align="center">
+  <a href="https://packagist.org/packages/perfbase/yii1"><img src="https://img.shields.io/packagist/v/perfbase/yii1" alt="Packagist Version"></a>
+  <a href="https://github.com/perfbaseorg/yii1/blob/main/LICENSE.txt"><img src="https://img.shields.io/packagist/l/perfbase/yii1" alt="License"></a>
+  <a href="https://github.com/perfbaseorg/yii1/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/perfbaseorg/yii1/ci.yml?branch=main" alt="CI"></a>
+  <img src="https://img.shields.io/badge/php-7.4%2B-blue" alt="PHP Version">
+  <img src="https://img.shields.io/badge/yii-1.1.x-blue" alt="Yii Version">
+</p>
+
+This package is a thin adapter over [`perfbase/php-sdk`](https://packagist.org/packages/perfbase/php-sdk). It keeps the framework layer thin, delegates transport and extension access to the shared SDK, fails open in production, and keeps action naming low-cardinality.
 
 ## Scope
 
@@ -215,12 +230,14 @@ composer run test
 composer run phpstan
 ```
 
-## Support Statement
+## Documentation
 
-This is a legacy adapter.
+Full documentation is available at [perfbase.com/docs](https://perfbase.com/docs).
 
-- declared compatibility target: Yii `1.1.x`
-- tested locally against current Composer-installable Yii 1.1
-- broader `1.1.x` compatibility is best-effort
+- **Docs**: [perfbase.com/docs](https://perfbase.com/docs)
+- **Issues**: [github.com/perfbaseorg/yii1/issues](https://github.com/perfbaseorg/yii1/issues)
+- **Support**: [support@perfbase.com](mailto:support@perfbase.com)
 
-The main value of this package is giving legacy Yii 1.1 applications a first-party Perfbase path without requiring invasive framework rewrites.
+## License
+
+Apache-2.0. See [LICENSE.txt](LICENSE.txt).
