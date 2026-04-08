@@ -1,0 +1,9 @@
+parameters:
+    level: 8
+    paths:
+        - src
+        - tests
+    scanDirectories:
+        - vendor/yiisoft/yii/framework
+    parallel:
+        maximumNumberOfProcesses: 1
