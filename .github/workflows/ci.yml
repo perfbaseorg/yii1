@@ -22,12 +22,6 @@ jobs:
         with:
           path: yii1
 
-      - name: Checkout php-sdk sibling
-        uses: actions/checkout@v4
-        with:
-          repository: perfbaseorg/php-sdk
-          path: lib-php-sdk
-
       - name: Set up PHP ${{ matrix.php-version }}
         uses: shivammathur/setup-php@v2
         with:

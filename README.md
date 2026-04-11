@@ -207,20 +207,7 @@ The package stays intentionally thin:
 
 The adapter does not implement a separate transport or persistence layer.
 
-## Local Development
-
-During local development this package uses the sibling SDK checkout rather than Packagist:
-
-```json
-{
-  "repositories": [
-    {
-      "type": "path",
-      "url": "../lib-php-sdk"
-    }
-  ]
-}
-```
+## Development
 
 Install and verify with:
 
