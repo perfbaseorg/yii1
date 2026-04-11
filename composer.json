@@ -24,7 +24,7 @@
   ],
   "require": {
     "php": ">=7.4 <8.6",
-    "perfbase/php-sdk": "^1.0",
+    "perfbase/php-sdk": "^1.4",
     "yiisoft/yii": "^1.1"
   },
   "require-dev": {

@@ -71,7 +71,7 @@ class PerfbaseClientProviderTest extends TestCase
             new PerfbaseErrorHandler(false, false),
             static function (Config $config) use (&$factoryCalls): RecordingPerfbaseClient {
                 $factoryCalls++;
-                TestCase::assertNull($config->proxy);
+                TestCase::assertNull($config->getProxy());
 
                 return new RecordingPerfbaseClient();
             }
@@ -95,7 +95,7 @@ class PerfbaseClientProviderTest extends TestCase
             ],
             new PerfbaseErrorHandler(false, false),
             static function (Config $config): RecordingPerfbaseClient {
-                TestCase::assertSame('http://proxy.local:8080', $config->proxy);
+                TestCase::assertSame('http://proxy.local:8080', $config->getProxy());
 
                 return new RecordingPerfbaseClient();
             }
