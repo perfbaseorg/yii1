@@ -20,18 +20,4 @@ class SpanNaming
     {
         return 'cron';
     }
-
-    private static function normalizeHttpPath(string $path): string
-    {
-        $trimmed = ltrim($path, '/');
-
-        return '/' . $trimmed;
-    }
-
-    private static function normalizeCommand(string $command): string
-    {
-        $normalized = trim($command, '/');
-
-        return $normalized === '' ? 'unknown' : $normalized;
-    }
 }
