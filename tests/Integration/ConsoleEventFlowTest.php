@@ -30,7 +30,7 @@ class ConsoleEventFlowTest extends TestCase
         $app->onBeginRequest(new \CEvent($app));
         $app->onEndRequest(new \CEvent($app));
 
-        self::assertSame(['console.cache/flush'], $client->startedSpans);
+        self::assertSame(['artisan'], $client->startedSpans);
         self::assertSame('cache/flush', $client->attributes['action']);
         self::assertSame('0', $client->attributes['exit_code']);
         self::assertSame(1, $client->submitCalls);
@@ -48,7 +48,7 @@ class ConsoleEventFlowTest extends TestCase
         $app->onBeginRequest(new \CEvent($app));
         $app->onEndRequest(new \CEvent($app));
 
-        self::assertSame(['cron.schedule/run'], $client->startedSpans);
+        self::assertSame(['cron'], $client->startedSpans);
         self::assertSame('cron', $client->attributes['source']);
     }
 

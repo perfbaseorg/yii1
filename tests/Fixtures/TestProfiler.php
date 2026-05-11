@@ -11,6 +11,7 @@ use Perfbase\Yii1\Support\PerfbaseErrorHandler;
 class TestProfiler extends AbstractProfiler
 {
     private bool $shouldProfile = true;
+    private bool $shouldSubmitTrace = true;
 
     /**
      * @param array<string, mixed> $config
@@ -20,7 +21,7 @@ class TestProfiler extends AbstractProfiler
         PerfbaseErrorHandler $errorHandler,
         array $config
     ) {
-        parent::__construct('test.span', $clientProvider, $errorHandler, $config, 'test', '1.2.3');
+        parent::__construct('test', $clientProvider, $errorHandler, $config, 'test', '1.2.3');
     }
 
     public function setShouldProfile(bool $shouldProfile): void
@@ -28,8 +29,18 @@ class TestProfiler extends AbstractProfiler
         $this->shouldProfile = $shouldProfile;
     }
 
+    public function setShouldSubmitTrace(bool $shouldSubmitTrace): void
+    {
+        $this->shouldSubmitTrace = $shouldSubmitTrace;
+    }
+
     protected function shouldProfile(): bool
     {
         return $this->shouldProfile;
+    }
+
+    protected function shouldSubmitTrace(): bool
+    {
+        return $this->shouldSubmitTrace;
     }
 }

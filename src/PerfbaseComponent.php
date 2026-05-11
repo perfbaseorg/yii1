@@ -17,6 +17,8 @@ class PerfbaseComponent extends \CApplicationComponent
     public string $api_url = 'https://ingress.perfbase.cloud';
     /** @var float|int|string */
     public $sample_rate = 0.1;
+    /** @var array<int, int|string>|null */
+    public ?array $profile_http_status_codes = null;
     public int $timeout = 10;
     public ?string $proxy = null;
     public int $flags = FeatureFlags::DefaultFlags;
@@ -86,6 +88,10 @@ class PerfbaseComponent extends \CApplicationComponent
      */
     public function getConfig(): array
     {
+        $profileHttpStatusCodes = $this->profile_http_status_codes === null
+            ? [...range(200, 299), ...range(500, 599)]
+            : $this->normalizeStatusCodes($this->profile_http_status_codes);
+
         return [
             'enabled' => $this->enabled,
             'debug' => $this->debug,
@@ -93,6 +99,7 @@ class PerfbaseComponent extends \CApplicationComponent
             'api_key' => $this->api_key,
             'api_url' => $this->api_url,
             'sample_rate' => $this->sample_rate,
+            'profile_http_status_codes' => $profileHttpStatusCodes,
             'timeout' => $this->timeout,
             'proxy' => $this->proxy,
             'flags' => $this->flags,
@@ -142,6 +149,32 @@ class PerfbaseComponent extends \CApplicationComponent
         return array_values(array_filter($filters, static function ($filter): bool {
             return is_string($filter) && $filter !== '';
         }));
+    }
+
+    /**
+     * @param mixed $statusCodes
+     * @return array<int, int>
+     */
+    private function normalizeStatusCodes($statusCodes): array
+    {
+        if (!is_array($statusCodes)) {
+            return [];
+        }
+
+        $normalized = [];
+
+        foreach ($statusCodes as $statusCode) {
+            if (is_int($statusCode)) {
+                $normalized[] = $statusCode;
+                continue;
+            }
+
+            if (is_string($statusCode) && ctype_digit($statusCode)) {
+                $normalized[] = (int) $statusCode;
+            }
+        }
+
+        return array_values(array_unique($normalized));
     }
 
     private function hydrateEnabledFlag(\CApplication $app): void

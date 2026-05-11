@@ -79,6 +79,7 @@ The adapter exposes this config contract:
     'api_key' => '',
     'api_url' => 'https://ingress.perfbase.cloud',
     'sample_rate' => 0.1,
+    'profile_http_status_codes' => [...range(200, 299), ...range(500, 599)],
     'timeout' => 10,
     'proxy' => null,
     'flags' => \Perfbase\SDK\FeatureFlags::DefaultFlags,
@@ -101,6 +102,7 @@ Config notes:
 - `enabled` controls Perfbase profiling, not Yii component loading.
 - `include.cron` is empty by default. That means console commands profile as `source=console` unless you explicitly classify them as cron.
 - `sample_rate` must be numeric and between `0.0` and `1.0`.
+- `profile_http_status_codes` defaults to `[...range(200, 299), ...range(500, 599)]`. Add codes such as `404` if you want to keep them, or set it to `[]` to disable HTTP trace submission entirely.
 - `app_version` is application-defined.
 - `environment` is derived from `YII_ENV` when available, otherwise `production`.
 
@@ -131,6 +133,7 @@ Behavior details:
 
 - `action` prefers a stable Yii route
 - `http_url` excludes query strings
+- HTTP traces are only submitted when the response status code is in `profile_http_status_codes`
 - query parameters are intentionally not included in the primary action/span fields
 - response status defaults to `200` when Yii has not set a more specific status
 

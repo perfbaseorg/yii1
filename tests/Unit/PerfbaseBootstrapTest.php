@@ -39,7 +39,7 @@ class PerfbaseBootstrapTest extends TestCase
         $app->onBeginRequest(new \CEvent($app));
         $app->onEndRequest(new \CEvent($app));
 
-        self::assertSame(['http.GET./site/index'], $client->startedSpans);
+        self::assertSame(['http'], $client->startedSpans);
         self::assertSame(1, $client->submitCalls);
     }
 
@@ -67,7 +67,7 @@ class PerfbaseBootstrapTest extends TestCase
         $app->onError(new \CErrorEvent($app, (string) E_WARNING, 'console failed', __FILE__, __LINE__));
         $app->onEndRequest(new \CEvent($app));
 
-        self::assertSame(['console.cache/flush'], $client->startedSpans);
+        self::assertSame(['artisan'], $client->startedSpans);
         self::assertSame('console failed', $client->attributes['exception']);
         self::assertSame('1', $client->attributes['exit_code']);
     }
@@ -84,7 +84,7 @@ class PerfbaseBootstrapTest extends TestCase
         $app->onBeginRequest(new \CEvent($app));
         $app->onEndRequest(new \CEvent($app));
 
-        self::assertSame(['cron.schedule/run'], $client->startedSpans);
+        self::assertSame(['cron'], $client->startedSpans);
         self::assertSame('cron', $client->attributes['source']);
     }
 
@@ -98,7 +98,7 @@ class PerfbaseBootstrapTest extends TestCase
         $app->onBeginRequest(new \CEvent($app));
         $app->onEndRequest(new \CEvent($app));
 
-        self::assertSame(['http.GET./server/fallback'], $client->startedSpans);
+        self::assertSame(['http'], $client->startedSpans);
     }
 
     public function test_non_application_sender_is_ignored(): void

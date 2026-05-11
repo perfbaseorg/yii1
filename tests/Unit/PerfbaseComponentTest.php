@@ -40,6 +40,19 @@ class PerfbaseComponentTest extends TestCase
         self::assertSame(['schedule/*'], $config['include']['cron']);
     }
 
+    public function test_configuration_exposes_http_status_allowlist(): void
+    {
+        $component = new PerfbaseComponent();
+        $defaultConfig = $component->getConfig();
+
+        self::assertSame([...range(200, 299), ...range(500, 599)], $defaultConfig['profile_http_status_codes']);
+
+        $component->profile_http_status_codes = [200, 404];
+        $customConfig = $component->getConfig();
+
+        self::assertSame([200, 404], $customConfig['profile_http_status_codes']);
+    }
+
     public function test_client_provider_and_error_handler_are_cached(): void
     {
         $component = new TestPerfbaseComponent();

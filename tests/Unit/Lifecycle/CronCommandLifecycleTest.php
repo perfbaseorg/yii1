@@ -32,7 +32,7 @@ class CronCommandLifecycleTest extends TestCase
         $lifecycle->setExitCode(0);
         $lifecycle->stopProfiling();
 
-        self::assertSame(['cron.schedule/run'], $client->startedSpans);
+        self::assertSame(['cron'], $client->startedSpans);
         self::assertSame('cron', $client->attributes['source']);
         self::assertSame('schedule/run', $client->attributes['action']);
         self::assertSame('0', $client->attributes['exit_code']);
@@ -79,7 +79,7 @@ class CronCommandLifecycleTest extends TestCase
         $lifecycle->setExitCode(0);
         $lifecycle->stopProfiling();
 
-        self::assertSame(['cron.unknown'], $client->startedSpans);
+        self::assertSame(['cron'], $client->startedSpans);
         self::assertSame('unknown', $client->attributes['action']);
     }
 

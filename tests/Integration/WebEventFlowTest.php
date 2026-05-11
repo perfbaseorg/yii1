@@ -31,7 +31,7 @@ class WebEventFlowTest extends TestCase
         $app->onBeginRequest(new \CEvent($app));
         $app->onEndRequest(new \CEvent($app));
 
-        self::assertSame(['http.GET./site/index'], $client->startedSpans);
+        self::assertSame(['http'], $client->startedSpans);
         self::assertSame('200', $client->attributes['http_status_code']);
         self::assertSame(1, $client->submitCalls);
     }
@@ -48,7 +48,8 @@ class WebEventFlowTest extends TestCase
 
         self::assertSame('missing', $client->attributes['exception']);
         self::assertSame('404', $client->attributes['http_status_code']);
-        self::assertSame(1, $client->submitCalls);
+        self::assertSame(0, $client->submitCalls);
+        self::assertSame(1, $client->resetCalls);
     }
 
     public function test_error_path_still_cleans_up(): void
@@ -64,6 +65,23 @@ class WebEventFlowTest extends TestCase
         self::assertSame('boom', $client->attributes['exception']);
         self::assertSame('500', $client->attributes['http_status_code']);
         self::assertSame(1, $client->submitCalls);
+        self::assertSame(0, $client->resetCalls);
+    }
+
+    public function test_custom_disallowed_error_status_is_not_submitted(): void
+    {
+        $client = new RecordingPerfbaseClient();
+        TestPerfbaseClientProvider::$client = $client;
+        $app = $this->createApplication([
+            'profile_http_status_codes' => [200],
+        ]);
+
+        $app->onBeginRequest(new \CEvent($app));
+        $app->onError(new \CErrorEvent($app, (string) E_WARNING, 'boom', __FILE__, __LINE__));
+        $app->onEndRequest(new \CEvent($app));
+
+        self::assertSame(0, $client->submitCalls);
+        self::assertSame(1, $client->resetCalls);
     }
 
     public function test_disabled_state_results_in_no_profiling(): void
@@ -102,6 +120,7 @@ class WebEventFlowTest extends TestCase
                     'class' => TestPerfbaseComponent::class,
                     'enabled' => true,
                     'sample_rate' => 1.0,
+                    'profile_http_status_codes' => [...range(200, 299), ...range(500, 599)],
                     'api_key' => 'test-key',
                     'app_version' => 'test-suite',
                 ], $perfbaseConfig),
